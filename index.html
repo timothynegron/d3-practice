@@ -8,10 +8,28 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <h3>SVG Bar</h3>
     <svg>
         <rect width="50" height="200" style="fill: blue;"/>
     </svg>
 
+    <h3>SVG Circle</h3>
+    <svg width="400" height="200" id="circle">
+        <circle cx="150" cy="50" r="25" style="fill: blue;"/>
+    </svg>
+
+    <h3>SVG Text</h3>
+    <svg width="250" height="50">
+        <text x="0" y="25">Adding text to SVG tag right here.</text>
+    </svg>
+
+    <h3 id="rec">D3 Bar<br></h3>
+    <h3 id="cir">D3 Circle<br></h3>
+    <h3 id="tex">D3 Text<br></h3>
+
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://d3js.org/d3.v6.min.js"></script>
     <script src="main.js"></script>
 </body>
