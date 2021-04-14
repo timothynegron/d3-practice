@@ -36,3 +36,35 @@ d3.select("#tex")
     .attr("y",25)
     .attr("x",0)
     .style("fill", "red");
+
+// ┌─────────────────────────────┐
+// │   Using variables with svg  │	
+// └─────────────────────────────┘
+
+const width = 200;
+const height = 100;
+const padding = 2;
+let dataset = [5, 10, 15, 20, 25];
+let svg = d3.select("#drawing")
+                .append("svg")
+                .attr("width", width)
+                .attr("height", height);
+
+// d for dataset
+svg.selectAll("#drawing")
+    .data(dataset)
+    .enter() // Create if don't exist
+    .append("rect")
+    .attr("x", function(d, i){
+        // i is indexes
+        // d is dataset
+        return i * (width/dataset.length);
+    })
+    .attr("y", function(d){
+        // Multiplying dataset by 4 to get bigger bars
+        return height - (d * 4);
+    })
+    .attr("width", (width/dataset.length) - padding)
+    .attr("height", function(d){
+        return d * 4
+    });
