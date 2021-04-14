@@ -29,7 +29,7 @@ d3.select("#cir") // selects element html tag by id
 
 d3.select("#tex")
     .append("svg")
-    .attr("width",250)
+    .attr("width",450)
     .attr("height",50)
     .append("text")
     .text("Adding text with D3 right here.")
