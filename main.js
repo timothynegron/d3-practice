@@ -76,7 +76,7 @@ svg.selectAll("rect")
 const width2 = 300; // Width of box
 const height2 = 350; // Height of box
 const padding2 = 2;
-const dataset2 = [10, 20, 30, 40, 50, 60, 70]
+const dataset2 = [10, 20, 30, 40, 50, 60, 70];
 const svg2 = d3.select("#drawing2").append("svg")
                 .attr("width", width2)
                 .attr("height", height2);
@@ -106,10 +106,10 @@ svg2.selectAll("rect")
 const width3 = 300; // Width of box
 const height3 = 350; // Height of box
 const padding3 = 2;
-const dataset3 = [10, 20, 30, 40, 50, 60, 70]
-const svg3 = d3.select("#drawing3").append("svg")
-                .attr("width", width3)
-                .attr("height", height3);
+const dataset3 = [15, 20, 35, 45, 50, 60, 65];
+const svg3 = d3.select('#drawing3').append('svg')
+                .attr('width', width3)
+                .attr('height', height3);
 
 function colorPicker(v){
     if(v<=20) {return "#666666";}
@@ -120,10 +120,16 @@ svg3.selectAll("rect")
     .data(dataset3)
     .enter()
     .append("rect")
-    .attr({
-        x: function(d, i) {return i * (width3 / dataset3.length);},
-        y: function(d) {return height3 - (d * 5);}, 
-        width: width3 / dataset3.length - padding3,
-        height: function(d) {return d*5;},
-        fill: function(d) {return colorPicker(d);}
+    .attr("x", function(d, i){ // Function will get called for each index
+        return i * (width3 / dataset3.length)
+    })
+    .attr("y", function(d){
+        return height3 - (d * 5);
+    })
+    .attr("width", width3 / dataset3.length - padding3)
+    .attr("height", function(d){
+        return d*5;
+    })
+    .attr("fill", function(d){
+        return colorPicker(d)
     });
