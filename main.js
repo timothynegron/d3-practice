@@ -41,13 +41,13 @@ d3.select("#tex")
 // │   Using variables with d3 svg  │	
 // └────────────────────────────────┘
 
-const width = 200;
+const width1 = 200;
 const height = 100;
 const padding = 2;
 const dataset = [5, 10, 15, 20, 25];
 const svg = d3.select("#drawing")
                 .append("svg")
-                .attr("width", width)
+                .attr("width", width1)
                 .attr("height", height);
 
 // d for dataset
@@ -58,13 +58,13 @@ svg.selectAll("rect")
     .attr("x", function(d, i){
         // i is indexes
         // d is dataset
-        return i * (width/dataset.length);
+        return i * (width1/dataset.length);
     })
     .attr("y", function(d){
         // Multiplying dataset by 4 to get bigger bars
         return height - (d * 4);
     })
-    .attr("width", (width/dataset.length) - padding)
+    .attr("width", (width1/dataset.length) - padding)
     .attr("height", function(d){
         return d * 4
     });
@@ -97,4 +97,33 @@ svg2.selectAll("rect")
     })
     .attr("fill", function(d){
         return "rgb(" + (d*3) + ", 0, 0)"
+    });
+
+// ┌────────────────────────────────────────────┐
+// │   Using variables with d3 svg continuation │	
+// └────────────────────────────────────────────┘
+
+const width3 = 300; // Width of box
+const height3 = 350; // Height of box
+const padding3 = 2;
+const dataset3 = [10, 20, 30, 40, 50, 60, 70]
+const svg3 = d3.select("#drawing3").append("svg")
+                .attr("width", width3)
+                .attr("height", height3);
+
+function colorPicker(v){
+    if(v<=20) {return "#666666";}
+    else if (v>20) {return "#FF0033";}
+}
+
+svg3.selectAll("rect")
+    .data(dataset3)
+    .enter()
+    .append("rect")
+    .attr({
+        x: function(d, i) {return i * (width3 / dataset3.length);},
+        y: function(d) {return height3 - (d * 5);}, 
+        width: width3 / dataset3.length - padding3,
+        height: function(d) {return d*5;},
+        fill: function(d) {return colorPicker(d);}
     });
