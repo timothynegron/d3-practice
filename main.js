@@ -99,9 +99,9 @@ svg2.selectAll("rect")
         return "rgb(" + (d*3) + ", 0, 0)"
     });
 
-// ┌────────────────────────────────────────────┐
-// │   Using variables with d3 svg continuation │	
-// └────────────────────────────────────────────┘
+// ┌──────────────────────────────────────────────┐
+// │   Using variables with d3 svg color function │	
+// └──────────────────────────────────────────────┘
 
 const width3 = 300; // Width of box
 const height3 = 350; // Height of box
@@ -133,3 +133,46 @@ svg3.selectAll("rect")
     .attr("fill", function(d){
         return colorPicker(d)
     });
+
+// ┌────────────────────────────────────────────┐
+// │   Using variables with d3 svg continuation │	
+// └────────────────────────────────────────────┘
+
+const width4 = 400; // Width of box
+const height4 = 350; // Height of box
+const padding4 = 2;
+const dataset4 = [15, 20, 35, 45, 50, 60, 65, 20, 30, 60, 50, 18, 7];
+const svg4 = d3.select('#drawing4').append('svg')
+                .attr('width', width4)
+                .attr('height', height4);
+
+function colorPicker(v){
+    if(v<=20) {return "#666666";}
+    else if (v>20) {return "#FF0033";}
+}
+
+svg4.selectAll("rect")
+    .data(dataset4)
+    .enter()
+    .append("rect")
+    .attr("x", function(d, i){return i * (width4 / dataset4.length)})
+    .attr("y", function(d){return height4 - (d * 5);})
+    .attr("width", width4 / dataset4.length - padding3)
+    .attr("height", function(d){return d*5;})
+    .attr("fill", function(d){return colorPicker(d)});
+
+
+// Add another text svg object to add text
+svg4.selectAll("text")
+    .data(dataset4)
+    .enter()
+    .append("text")
+    .text(function(d) {return d;})   
+    .attr("text-anchor", "middle")
+    .attr("x", function(d, i) {
+        return (i * (width4 / dataset4.length)) + (width4/dataset4.length - padding)/2;
+    })
+    .attr("y", function(d) {return height4-(d*5)+25;})
+    .attr("font-family", "san-serif")
+    .attr("font-size", 25)
+    .attr("fill", "#FFFFFF")
