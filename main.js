@@ -134,14 +134,14 @@ svg3.selectAll("rect")
         return colorPicker(d)
     });
 
-// ┌────────────────────────────────────────────┐
-// │   Using variables with d3 svg continuation │	
-// └────────────────────────────────────────────┘
+// ┌──────────────────────────────────────┐
+// │   Using variables with d3 svg Labels │	
+// └──────────────────────────────────────┘
 
 const width4 = 400; // Width of box
 const height4 = 350; // Height of box
 const padding4 = 2;
-const dataset4 = [15, 20, 35, 45, 50, 60, 65, 20, 30, 60, 50, 18, 7];
+const dataset4 = [15, 20, 35, 45, 50, 60, 65, 11, 30, 60, 50, 18, 7];
 const svg4 = d3.select('#drawing4').append('svg')
                 .attr('width', width4)
                 .attr('height', height4);
@@ -176,3 +176,56 @@ svg4.selectAll("text")
     .attr("font-family", "san-serif")
     .attr("font-size", 25)
     .attr("fill", "#FFFFFF")
+
+// ┌─────────────────┐
+// │   d3 Line Graph │	
+// └─────────────────┘
+
+// Variables
+const height5 = 50;
+const width5 = 200;
+
+// Data
+const monthlySales = [ 
+    {"month":10, "sales": 20},
+    {"month":20, "sales": 14},
+    {"month":30, "sales": 20},
+    {"month":40, "sales": 22},
+    {"month":50, "sales": 15},
+    {"month":60, "sales": 22},
+    {"month":70, "sales": 9},
+    {"month":80, "sales": 6},
+    {"month":90, "sales": 23},
+    {"month":100, "sales": 7}
+];
+
+// Create a Line Function
+const lineFun = d3.svg.line()
+                    .x(function(d) {return d.month*2;})
+                    .y(function(d) {return height5-d.sales;})
+                    .interpolate("linear"); // I believe only v3 supports interpolate
+
+const svg5 = d3.select("#drawing5")
+                .append("svg")
+                .attr("width", width5)
+                .attr("height", height5);
+
+// Only version 3 supports .attr(obj) | Might be able to use .attrs(obj) with v6
+const viz5 = svg5.append("path") // Path d operator uses coordinates to draw line (inspect)
+                .attr({
+                    d: lineFun(monthlySales),
+                    "stroke": "purple",
+                    "stroke-width": 2,
+                    "fill": "none"
+                });
+// Add labels
+const labels = svg5.selectAll("text")
+                    .data(monthlySales)
+                    .enter()
+                    .append("text")
+                    .text(function(d){return d.sales;})
+                    .attr({
+                        x: function(d){return d.month*3;},
+                        y: function(d){return height5-d.sales},
+                        "font-size": 12
+                    })
