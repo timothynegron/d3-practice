@@ -181,29 +181,29 @@ svg4.selectAll("text")
 // │   d3 Line Graph │	
 // └─────────────────┘
 
-// Variables
-const height5 = 50;
-const width5 = 200;
+// Dimensions of graph
+const height5 = 320;
+const width5 = 500;
 
 // Data
 const monthlySales = [ 
-    {"month":10, "sales": 20},
-    {"month":20, "sales": 14},
-    {"month":30, "sales": 20},
-    {"month":40, "sales": 22},
-    {"month":50, "sales": 15},
-    {"month":60, "sales": 22},
-    {"month":70, "sales": 9},
-    {"month":80, "sales": 6},
-    {"month":90, "sales": 23},
-    {"month":100, "sales": 7}
+    {"month":10, "sales": 100},
+    {"month":20, "sales": 130},
+    {"month":30, "sales": 250},
+    {"month":40, "sales": 300},
+    {"month":50, "sales": 265},
+    {"month":60, "sales": 225},
+    {"month":70, "sales": 180},
+    {"month":80, "sales": 120},
+    {"month":90, "sales": 145},
+    {"month":100, "sales": 130}
 ];
 
-// Create a Line Function
+// Create a Line Function to draw the graph
 const lineFun = d3.svg.line()
-                    .x(function(d) {return d.month*2;})
+                    .x(function(d) {return d.month*4;})
                     .y(function(d) {return height5-d.sales;})
-                    .interpolate("linear"); // I believe only v3 supports interpolate
+                    .interpolate("basis"); // I believe only v3 supports interpolate
 
 const svg5 = d3.select("#drawing5")
                 .append("svg")
@@ -225,7 +225,19 @@ const labels = svg5.selectAll("text")
                     .append("text")
                     .text(function(d){return d.sales;})
                     .attr({
-                        x: function(d){return d.month*3;},
+                        x: function(d){return d.month*4-25;},
                         y: function(d){return height5-d.sales},
-                        "font-size": 12
+                        "font-size": 14,
+                        "font-family": "sans-serif",
+                        "fill": "#666666",
+                        "text-anchor": "start",
+                        "dy": ".7em", // line height
+                        "font-weight": function(d,i){
+                            if(i===0 || i===(monthlySales.length - 1)){
+                                return "bold";
+                            }
+                            else{
+                                return "normal";
+                            }
+                        }
                     })
