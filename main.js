@@ -272,6 +272,20 @@ function salesKPI(d){
     if(d<250) {return "#666666";}
 }
 
+function showMinMax(ds, col, val, type) {
+    const max = d3.max(ds, function(d){return d[col];});
+    const min = d3.min(ds, function(d){return d[col];});
+
+    if(type === 'minmax' && (val === max || val === min)){
+        return val;
+    }
+    else {
+        if(type === "all"){
+            return val;
+        }
+    }
+}
+
 // Create our svg
 const svg6 = d3.select("#drawing6")
                 .append("svg")
@@ -288,3 +302,20 @@ const dots = svg6.selectAll("circle")
                     r: 5,
                     "fill": function(d){return salesKPI(d.sales);}
                 })
+
+// Add labels
+const labels2 = svg6.selectAll("text")
+                    .data(monthlySales6)
+                    .enter()
+                    .append("text")
+                    .text(function (d) {
+                        return showMinMax(monthlySales6, "sales", d.sales, "minmax");
+                    })
+                    .attr({
+                        x: function(d){return (d.month*3)-25;},
+                        y: function(d){return height6-d.sales;},
+                        "font-size": "12px",
+                        "font-family": "sans-serif",
+                        "fill": "#666666",
+                        "text-anchor": "start"
+                    });
