@@ -177,9 +177,9 @@ svg4.selectAll("text")
     .attr("font-size", 25)
     .attr("fill", "#FFFFFF")
 
-// ┌─────────────────┐
-// │   d3 Line Graph │	
-// └─────────────────┘
+// ┌───────────────────┐
+// │   d3 Line Graph   │	
+// └───────────────────┘
 
 // Dimensions of graph
 const height5 = 320;
@@ -241,3 +241,50 @@ const labels = svg5.selectAll("text")
                             }
                         }
                     })
+
+// ┌─────────────────────┐
+// │   d3 Scatter Plot   │	
+// └─────────────────────┘
+
+// Used to look for clusters or out liars
+
+// Dimensions of graph
+const height6 = 320;
+const width6 = 500;
+
+// Data
+const monthlySales6 = [ 
+    {"month":10, "sales": 100},
+    {"month":20, "sales": 130},
+    {"month":30, "sales": 250},
+    {"month":40, "sales": 300},
+    {"month":50, "sales": 265},
+    {"month":60, "sales": 225},
+    {"month":70, "sales": 180},
+    {"month":80, "sales": 120},
+    {"month":90, "sales": 145},
+    {"month":100, "sales": 130}
+];
+
+// KPI (qualitative attributes) are they good or are they bad
+function salesKPI(d){
+    if(d>=250) {return "#33CC66";} else
+    if(d<250) {return "#666666";}
+}
+
+// Create our svg
+const svg6 = d3.select("#drawing6")
+                .append("svg")
+                .attr({width: width6, height: height6});
+
+// Add dots
+const dots = svg6.selectAll("circle")
+                .data(monthlySales6)
+                .enter()
+                .append("circle")
+                .attr({
+                    cx: function(d){return d.month*3;},
+                    cy: function(d){return height6-d.sales;},
+                    r: 5,
+                    "fill": function(d){return salesKPI(d.sales);}
+                })
