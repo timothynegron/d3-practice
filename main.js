@@ -350,7 +350,7 @@ function salesKPI(d){
     if(d<250) {return "#666666";}
 }
 
-function showMinMax(ds, col, val, type) {
+function showMinMax2(ds, col, val, type) {
     const max = d3.max(ds, function(d){return d[col];});
     const min = d3.min(ds, function(d){return d[col];});
 
@@ -387,7 +387,7 @@ const labels3 = svg7.selectAll("text")
                     .enter()
                     .append("text")
                     .text(function (d) {
-                        return showMinMax(monthlySales7, "sales", d.sales, "all");
+                        return showMinMax2(monthlySales7, "sales", d.sales, "all");
                     })
                     .attr({
                         x: function(d){return (d.month*3)-25;},
@@ -397,3 +397,17 @@ const labels3 = svg7.selectAll("text")
                         "fill": "#666666",
                         "text-anchor": "start"
                     });
+
+// After adding everything add an event listener
+
+d3.select("select")
+.on("change", function(d){
+
+    let selection = d3.select("#label-options").node().value;
+
+    svg7.selectAll("text")
+        .data(monthlySales7)
+        .text(function(d){
+            return showMinMax2(monthlySales7, "sales", d.sales, selection);
+        })
+});
