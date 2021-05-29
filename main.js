@@ -319,3 +319,81 @@ const labels2 = svg6.selectAll("text")
                         "fill": "#666666",
                         "text-anchor": "start"
                     });
+
+// ┌────────────────────────────────┐
+// │   d3 Scatter Plot with Filter  │	
+// └────────────────────────────────┘
+
+// Used to look for clusters or out liars
+
+// Dimensions of graph
+const height7 = 320;
+const width7 = 500;
+
+// Data
+const monthlySales7 = [ 
+    {"month":10, "sales": 100},
+    {"month":20, "sales": 130},
+    {"month":30, "sales": 250},
+    {"month":40, "sales": 300},
+    {"month":50, "sales": 265},
+    {"month":60, "sales": 225},
+    {"month":70, "sales": 180},
+    {"month":80, "sales": 120},
+    {"month":90, "sales": 145},
+    {"month":100, "sales": 130}
+];
+
+// KPI (qualitative attributes) are they good or are they bad
+function salesKPI(d){
+    if(d>=250) {return "#33CC66";} else
+    if(d<250) {return "#666666";}
+}
+
+function showMinMax(ds, col, val, type) {
+    const max = d3.max(ds, function(d){return d[col];});
+    const min = d3.min(ds, function(d){return d[col];});
+
+    if(type === 'minmax' && (val === max || val === min)){
+        return val;
+    }
+    else {
+        if(type === "all"){
+            return val;
+        }
+    }
+}
+
+// Create our svg
+const svg7 = d3.select("#drawing7")
+                .append("svg")
+                .attr({width: width7, height: height7});
+
+// Add dots
+const dots2 = svg7.selectAll("circle")
+                .data(monthlySales7)
+                .enter()
+                .append("circle")
+                .attr({
+                    cx: function(d){return d.month*3;},
+                    cy: function(d){return height7-d.sales;},
+                    r: 5,
+                    "fill": function(d){return salesKPI(d.sales);}
+                })
+
+// Add labels
+const labels3 = svg7.selectAll("text")
+                    .data(monthlySales7)
+                    .enter()
+                    .append("text")
+                    .text(function (d) {
+                        return showMinMax(monthlySales7, "sales", d.sales, "all");
+                    })
+                    .attr({
+                        x: function(d){return (d.month*3)-25;},
+                        y: function(d){return height7-d.sales;},
+                        "font-size": "12px",
+                        "font-family": "sans-serif",
+                        "fill": "#666666",
+                        "text-anchor": "start"
+                    });
